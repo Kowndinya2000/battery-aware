@@ -1,5 +1,4 @@
 package com.dell.battery_aware;
-
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,14 +6,10 @@ import android.view.View;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-
 import com.dell.battery_aware.databinding.ActivityMainBinding;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 public class MainActivity2 extends working{
-
     private String mLatitudeLabel;
     private String mLongitudeLabel;
     private String mLastUpdateTimeLabel;
@@ -24,7 +19,8 @@ public class MainActivity2 extends working{
     private String start_string = "Start updates button";
     private boolean start_button = true;
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mLatitudeLabel = getResources().getString(R.string.latitude_label);
@@ -36,15 +32,12 @@ public class MainActivity2 extends working{
         mCurrentLocation = getLocation();
         mLastUpdateTime = getLastLocationUpdateTime();
     }
-
-
     @Override
     public void onBatteryLevelChanged() {
         super.onBatteryLevelChanged();
         mBinding.percentageLabel.setText(getCurrentBatteryLevel());
         mBinding.timeRunning.setText(getCurrentUpdateInterval());
     }
-
     @Override
     public void updateValuesFromBundle(Bundle savedInstanceState) {
         super.updateValuesFromBundle(savedInstanceState);
@@ -67,7 +60,6 @@ public class MainActivity2 extends working{
     public void startUpdatesButtonHandler(View view) {
         startLocationService();
     }
-
     public void stopUpdatesButtonHandler(View view) {
         stopLocationUpdates();
     }
@@ -93,7 +85,6 @@ public class MainActivity2 extends working{
     Double latitude2;
     Double longitude2;
     private void updateUI() {
-
         if (mCurrentLocation == null) return;
         if (mBinding.longitudeText.getText().toString().isEmpty() || mBinding.latitudeText.getText().toString().isEmpty()) {
             latitude1 = mCurrentLocation.getLatitude();
@@ -134,8 +125,6 @@ public class MainActivity2 extends working{
                 latitude2) + String.format("%s: %f", mLongitudeLabel,
                 longitude2) + " dist: " + total_distance + "battery: " + mBinding.percentageLabel.getText().toString() + "dileep";
     }
-
-
     @Override
     public void onLocationServiceStart()
     {
@@ -156,9 +145,9 @@ public class MainActivity2 extends working{
         Toast.makeText(this, getResources().getString(R.string.location_updated_message), Toast.LENGTH_SHORT).show();
         Toast.makeText(this, location_updated_message, Toast.LENGTH_SHORT).show();
     }
-
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
+    public void onSaveInstanceState(Bundle savedInstanceState)
+    {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putBoolean(start_string,start_button);
     }

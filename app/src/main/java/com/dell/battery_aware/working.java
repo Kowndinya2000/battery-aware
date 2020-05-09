@@ -94,7 +94,7 @@ public class working extends AppCompatActivity implements GoogleApiClient.Connec
     {
         if(setUpIntervalObject.isCharging)
         {
-          return 13000;
+          return setUpIntervalObject.MIN_INTERVAL;
         }
         if(setUpIntervalObject.inForeGround)
         {
@@ -122,6 +122,7 @@ public class working extends AppCompatActivity implements GoogleApiClient.Connec
             long rem = 100 - per;
             percentageLabel = String.valueOf(level);
             UPDATE_INTERVAL_IN_MILLISECONDS = trigger();
+            Log.i("Running in Foreground: ", String.valueOf(UPDATE_INTERVAL_IN_MILLISECONDS));
             timeRunning = String.valueOf(UPDATE_INTERVAL_IN_MILLISECONDS);
             onBatteryLevelChanged();
             if (mGoogleApiClient.isConnected() && global_button) {
@@ -192,7 +193,6 @@ public class working extends AppCompatActivity implements GoogleApiClient.Connec
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS/2);
         Log.i("String:",String.valueOf(UPDATE_INTERVAL_IN_MILLISECONDS));
-      //  mLocationRequest.setFastestInterval(UPDATE_INTERVAL_IN_MILLISECONDS/2);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
     public boolean isLocationServiceOn(){
@@ -338,9 +338,7 @@ public class working extends AppCompatActivity implements GoogleApiClient.Connec
     protected void onPause() {
         super.onPause();
         setUpIntervalObject.inForeGround = false;
-//        if (mGoogleApiClient.isConnected()) {
-//            stopLocationUpdates();
-//        }
+        Log.i("Running in Background: ", getCurrentUpdateInterval());
     }
     @Override
     protected void onStop() {
@@ -402,5 +400,6 @@ public class working extends AppCompatActivity implements GoogleApiClient.Connec
     {
         return super.moveTaskToBack(setUpIntervalObject.runInBackground);
     }
+
 }
 
